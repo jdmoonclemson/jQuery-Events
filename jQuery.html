@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <div id="navbar"></div>
+    <script>document.addEventListener('DOMContentLoaded', () => {
+        fetch('navBar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar').innerHTML = data;
+            });
+    });</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+         .accordion-header {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border: 1px solid #2980b9;
+            margin-top: 5px;
+        }
+        .accordion-content {
+            display: none;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .progress-container {
+            width: 100%;
+            background-color: #ddd;
+            border: 1px solid #999;
+            margin-top: 20px;
+            height: 25px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 25px;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            $("div").hover(
+                function() {
+                    $(this).css("background-color", "yellow");
+                },
+                function() {
+                    $(this).css("background-color", "white");
+                });
+            //Button Fading
+            $("#fadeDiv1").click(function(){
+                $("#div1").fadeOut();
+            });
+            $("#fadeDiv2").click(function(){
+                $("#div2").fadeOut();
+            });
+            $("#fadeDiv3").click(function(){
+                $("#div3").fadeOut();
+            });
+            //Date Picker
+            $(function () {
+                $("#datePicker").datepicker();
+            });
+            // Accordion functionality
+             $(".accordion-header").click(function() {
+                 $(this).next(".accordion-content").slideToggle();
+                $(".accordion-content").not($(this).next()).slideUp(); // Close other sections
+            });
+            // Progress Bar Logic
+            let progress = 0;
+            let duration = 20; // Total seconds
+            let interval = 1000; // 1 second per update
+            let progressBar = $("#progress-bar");
+
+            function updateProgress() {
+                if (progress < 100) {
+                    progress += 100 / duration; // Increase progress percentage
+                    progressBar.css("width", progress + "%").text(Math.round(progress) + "%");
+                } else {
+                    clearInterval(progressInterval); // Stop when complete
+                }
+            }
+
+            let progressInterval = setInterval(updateProgress, interval); // Start updating every second
+        });
+    </script>
+</head>
+<body>
+
+<h1>Welcome to My Homepage</h1>
+
+<p>This is a paragraph.</p>
+
+<button id ="fadeDiv1">Fade Div 1</button>
+<button id ="fadeDiv2">Fade Div 2</button>
+<button id ="fadeDiv3">Fade Div 3</button>
+<br><br>
+Date:<input type="date" id="datePicker">
+
+<div id="div1" style="border: 1px solid black; padding: 10px;">
+    <p>A paragraph in a div.</p>
+    <p>Another paragraph in a div.</p>
+</div>
+<br>
+
+<div id ="div2" style="border: 1px solid black; padding: 10px;">
+    <p>A paragraph in another div.</p>
+    <p>Another paragraph in another div.</p>
+</div>
+<br>
+
+<div id ="div3" style="border: 1px solid black; padding: 10px;">
+    <p>A paragraph in another div.</p>
+    <p>Another paragraph in another div.</p>
+</div>
+
+<!-- jQuery Accordion -->
+<h2>Accordion Section</h2>
+
+<div class="accordion-header">Section 1</div>
+<div class="accordion-content">
+    <p>Content for Section 1.</p>
+</div>
+
+<div class="accordion-header">Section 2</div>
+<div class="accordion-content">
+    <p>Content for Section 2.</p>
+</div>
+
+<div class="accordion-header">Section 3</div>
+<div class="accordion-content">
+    <p>Content for Section 3.</p>
+</div>
+
+<br><br>
+
+<!-- jQuery Progress Bar -->
+<h2>Progress Bar</h2>
+<div class="progress-container">
+    <div id="progress-bar" class="progress-bar">0%</div>
+</div>
+</body>
+</html>
